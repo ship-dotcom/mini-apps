@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mini-apps</title>
+<style>
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    display: grid;
+    place-items: start center;
+    min-height: 100dvh;
+    padding: 3rem 1.25rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #14161a;
+    color: #e8e8e8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    width: 100%;
+    max-width: 34rem;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    margin: 0 0 0.4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #9aa1ad;
+    line-height: 1.45;
+  }
+
+  .apps {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.35rem 1rem;
+    padding: 1.15rem 1.25rem;
+    background: #1d2026;
+    border: 1px solid #2a2e36;
+    border-radius: 1rem;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    background: #242830;
+    border-color: #3d434f;
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .card:active {
+    transform: scale(0.99);
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 650;
+    color: #fafafa;
+  }
+
+  .card-arrow {
+    grid-row: span 2;
+    font-size: 1.2rem;
+    color: #9aa1ad;
+  }
+
+  .card-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #a6adb9;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>mini-apps</h1>
+    <p class="subtitle">Lightweight web mini-apps for browsers and messengers.</p>
+  </header>
+
+  <section class="apps" aria-label="Apps">
+    <a class="card" href="./t-back/">
+      <h2 class="card-title">TBack Memory</h2>
+      <span class="card-arrow" aria-hidden="true">&rarr;</span>
+      <p class="card-desc">Swipe right if the card matches N steps back, swipe left if not. A fast memory game for short breaks.</p>
+    </a>
+  </section>
+</main>
+</body>
+</html>
