@@ -25,7 +25,7 @@
 
   main {
     width: 100%;
-    max-width: 34rem;
+    max-width: 44rem;
   }
 
   header {
@@ -48,15 +48,14 @@
 
   .apps {
     display: grid;
-    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1.1rem;
   }
 
   .card {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 0.35rem 1rem;
-    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     background: #1d2026;
     border: 1px solid #2a2e36;
     border-radius: 1rem;
@@ -69,7 +68,7 @@
   .card:focus-visible {
     background: #242830;
     border-color: #3d434f;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     outline: none;
   }
 
@@ -77,22 +76,38 @@
     transform: scale(0.99);
   }
 
+  .card-preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    background: #14161a;
+  }
+
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    padding: 1rem 1.15rem 1.15rem;
+  }
+
   .card-title {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 650;
     color: #fafafa;
   }
 
   .card-arrow {
-    grid-row: span 2;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: #9aa1ad;
   }
 
   .card-desc {
+    grid-column: 1 / -1;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     line-height: 1.45;
     color: #a6adb9;
   }
@@ -107,9 +122,12 @@
 
   <section class="apps" aria-label="Apps">
     <a class="card" href="./t-back/">
-      <h2 class="card-title">TBack Memory</h2>
-      <span class="card-arrow" aria-hidden="true">&rarr;</span>
-      <p class="card-desc">Swipe right if the card matches N steps back, swipe left if not. A fast memory game for short breaks.</p>
+      <img class="card-preview" src="./t-back/preview.png" alt="TBack Memory preview" width="640" height="360">
+      <div class="card-body">
+        <h2 class="card-title">TBack Memory</h2>
+        <span class="card-arrow" aria-hidden="true">&rarr;</span>
+        <p class="card-desc">Swipe right if the card matches N steps back, swipe left if not. A fast memory game for short breaks.</p>
+      </div>
     </a>
   </section>
 </main>
