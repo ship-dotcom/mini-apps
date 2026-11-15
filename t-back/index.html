@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tback</title>
+<style>
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    display: grid;
+    grid-template-rows: 5rem 1fr 11rem;
+    place-items: center;
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: system-ui, sans-serif;
+    background: #14161a;
+    color: #e8e8e8;
+  }
+
+  #sign {
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  #stage {
+    position: relative;
+    width: min(64vw, 16rem);
+    aspect-ratio: 3 / 4;
+  }
+
+  .card {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 7rem;
+    font-weight: 700;
+    background: #fafafa;
+    color: #14161a;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.45);
+    touch-action: none;
+    transform:
+      translateX(calc(var(--shift, 0) * 1px))
+      rotate(calc(var(--shift, 0) * 0.06deg));
+    transition: transform 0.25s ease-out;
+  }
+
+  /* While the finger moves the card, the card follows it without a delay. */
+  .card[style*="--shift"] { transition: none; }
+
+  .card.right, .card.left {
+    z-index: 1;
+    transition: transform 0.35s ease-in;
+  }
+  .card.right { transform: translateX(120vw) rotate(30deg); }
+  .card.left { transform: translateX(-120vw) rotate(-30deg); }
+
+  footer {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: center;
+    align-content: start;
+    height: 100%;
+    padding-top: 0.5rem;
+  }
+
+  #streak, #last { margin: 0; font-size: 1.1rem; }
+  #streak::before { content: "streak "; opacity: 0.6; }
+  #last::before { content: "last result "; opacity: 0.6; }
+
+  #settings {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.35rem;
+    width: min(92vw, 22rem);
+  }
+  #settings button:nth-child(-n + 3) { grid-column: span 3; }
+
+  button {
+    padding: 0.5rem 0;
+    font: inherit;
+    color: inherit;
+    background: #2a2e36;
+    border: 0;
+    border-radius: 0.5rem;
+  }
+  button[aria-pressed="true"] { background: #e8e8e8; color: #14161a; }
+</style>
+</head>
+<body>
+<p id="sign"></p>
+<div id="stage"></div>
+<footer>
+  <p id="streak"></p>
+  <p id="last"></p>
+  <div id="settings"></div>
+</footer>
+<script src="tback.js"></script>
+</body>
+</html>
