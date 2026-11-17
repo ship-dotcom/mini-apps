@@ -11,10 +11,10 @@
   var symbols = [];
   var streak = 0;
   var sign = "";
-  var card;
-  var flown = null;
-  var [stage, signView, streakView, lastView, settingsView] = [
+  var [stage, card, nextCard, signView, streakView, lastView, settingsView] = [
     "stage",
+    "card",
+    "next",
     "sign",
     "streak",
     "last",
@@ -55,42 +55,9 @@
     }
   }
   function putCard() {
-    const next = document.createElement("div");
-    next.className = "card";
-    next.textContent = symbols[symbols.length - 1];
-    stage.prepend(next);
-    card = next;
-    let start = null;
-    let shift = 0;
-    next.addEventListener("touchstart", (event) => {
-      if (next !== card || event.touches.length !== 1)
-        return;
-      start = event.touches[0].clientX;
-      shift = 0;
-    });
-    next.addEventListener("touchmove", (event) => {
-      if (start === null)
-        return;
-      shift = event.touches[0].clientX - start;
-      next.style.setProperty("--shift", String(shift));
-    });
-    next.addEventListener("touchend", () => {
-      if (start === null)
-        return;
-      start = null;
-      next.style.removeProperty("--shift");
-      if (Math.abs(shift) > window.innerWidth / 4)
-        answer(shift > 0 ? "right" : "left");
-    });
-    next.addEventListener("touchcancel", () => {
-      start = null;
-      next.style.removeProperty("--shift");
-    });
-  }
-  function flyOff(side) {
-    flown?.remove();
-    flown = card;
-    card.classList.add(side);
+    card.textContent = symbols[symbols.length - 1];
+    nextCard.textContent = nextSymbol(symbols, SETS[settings.set], settings.n);
+    stage.scrollLeft = stage.clientWidth;
   }
   function newGame(withSign) {
     streak = 0;
@@ -101,7 +68,6 @@
   }
   function answer(side) {
     const correct = correctSide(symbols, settings.n);
-    flyOff(side);
     if (correct !== null && side !== correct) {
       localStorage.setItem(LAST_RESULT_KEY, String(streak));
       newGame("wrong");
@@ -110,7 +76,7 @@
     if (correct !== null)
       streak += 1;
     sign = correct !== null ? "correct" : "";
-    symbols.push(nextSymbol(symbols, SETS[settings.set], settings.n));
+    symbols.push(nextCard.textContent);
     putCard();
     show();
   }
@@ -130,7 +96,7 @@
     addButton(SETS[name].slice(0, 3).join(" "), name, () => {
       settings.set = name;
       symbols = [nextSymbol([], SETS[name], settings.n)];
-      card.textContent = symbols[0];
+      putCard();
     });
   }
   for (const n of N_VALUES) {
@@ -138,13 +104,19 @@
       settings.n = n;
     });
   }
+  stage.addEventListener("scrollend", () => {
+    if (stage.scrollLeft < stage.clientWidth / 2)
+      answer("right");
+    if (stage.scrollLeft > stage.clientWidth * 1.5)
+      answer("left");
+  });
   document.addEventListener("keydown", (event) => {
     if (event.repeat)
       return;
     if (event.key === "ArrowRight")
-      answer("right");
+      stage.scrollTo({ left: 0, behavior: "smooth" });
     if (event.key === "ArrowLeft")
-      answer("left");
+      stage.scrollTo({ left: stage.clientWidth * 2, behavior: "smooth" });
   });
   newGame("");
 })();
