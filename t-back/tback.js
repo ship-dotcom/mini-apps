@@ -49,6 +49,9 @@
     streakView.hidden = start;
     streakView.textContent = String(streak);
     signView.textContent = sign;
+    if (sign)
+      signView.animate([{ opacity: 1 }, { opacity: 0 }], { duration: sign === "wrong" ? 1500 : 600, fill: "forwards" });
+    sign = "";
     for (const button of settingsView.querySelectorAll("button")) {
       const inUse = button.value === settings.set || button.value === String(settings.n);
       button.setAttribute("aria-pressed", String(inUse));
