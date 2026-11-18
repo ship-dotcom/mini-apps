@@ -111,6 +111,9 @@
       answer("left");
   });
   document.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft")
+      return;
+    event.preventDefault();
     if (event.repeat)
       return;
     if (event.key === "ArrowRight")
