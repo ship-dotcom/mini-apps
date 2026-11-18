@@ -104,11 +104,15 @@
       settings.n = n;
     });
   }
-  stage.addEventListener("scrollend", () => {
-    if (stage.scrollLeft < stage.clientWidth / 2)
-      answer("right");
-    if (stage.scrollLeft > stage.clientWidth * 1.5)
-      answer("left");
+  var settle;
+  stage.addEventListener("scroll", () => {
+    clearTimeout(settle);
+    settle = setTimeout(() => {
+      if (stage.scrollLeft < stage.clientWidth / 2)
+        answer("right");
+      if (stage.scrollLeft > stage.clientWidth * 1.5)
+        answer("left");
+    }, 100);
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft")
